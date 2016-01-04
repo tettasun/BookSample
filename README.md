@@ -1,4 +1,4 @@
 # BookSample
 BookSample
 
-For Unity5.2.1
+Unity5.3向けに一部変更しています
