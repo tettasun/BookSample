@@ -20,7 +20,8 @@ public class Gradient : BaseMeshEffect
 	public Color color1 = Color.white;
 	public Color color2 = Color.black;
 	Graphic graphic;
-
+   
+#if UNITY_5_2
 	public override void ModifyMesh(Mesh mesh)
 	{
 		if (!this.IsActive())
@@ -40,6 +41,16 @@ public class Gradient : BaseMeshEffect
 			vertexHelper2.FillMesh(mesh);
 		}
 	}
+#endif
+
+    public override void ModifyMesh(VertexHelper vertexHelper)
+    {
+        List<UIVertex> vertexList = new List<UIVertex>();
+        vertexHelper.GetUIVertexStream(vertexList);
+        ModifyVertices(vertexList);
+        vertexHelper.Clear();
+        vertexHelper.AddUIVertexTriangleStream(vertexList);
+    }
 
 	public void ModifyVertices(List<UIVertex> vList){
 		if (IsActive() == false || vList == null || vList.Count == 0)

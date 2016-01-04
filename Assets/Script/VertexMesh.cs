@@ -13,6 +13,8 @@ public class VertexMesh : BaseMeshEffect {
 	//変更する頂点の位置情報	
 	public Vector3[] myVertex = new Vector3[6];
 
+
+#if UNITY_5_2
 	//Mesh情報の受け取り
 	public override void ModifyMesh(Mesh mesh)
 	{
@@ -33,6 +35,16 @@ public class VertexMesh : BaseMeshEffect {
 			vertexHelper2.FillMesh(mesh);
 		}
 	}
+#endif
+
+    public override void ModifyMesh(VertexHelper vertexHelper)
+    {
+        List<UIVertex> vertexList = new List<UIVertex>();
+        vertexHelper.GetUIVertexStream(vertexList);
+        ModifyVertices(vertexList);
+        vertexHelper.Clear();
+        vertexHelper.AddUIVertexTriangleStream(vertexList);
+    }
 	
 	//頂点情報の加工
 	public void ModifyVertices(List<UIVertex> vList){
